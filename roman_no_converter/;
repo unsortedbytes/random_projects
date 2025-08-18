@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const VALIDATION_CHARACTER=['I', 'V','X','L','C','D','M'];
+
+
+
+bool check_valid_charaters(string s){
+   return true; 
+}
+
+// vector<string> get_numbers(string s){
+//     vector<string> result;
+//
+// }
+
+int main(){
+    string c;
+    cin>>c;
+    c=c.uppercase();
+    cout<<endl<<c<<endl;
+}
