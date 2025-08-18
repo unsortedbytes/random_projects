@@ -16,6 +16,32 @@ const map<string, int> value_map = {
     {"XC", 90},
     {"CD", 400},
     {"CM", 900},
+};
+
+int total(vector<string> input){
+    int sum =0;
+    for(int i =0;i<input.size();i++){
+        sum +=value_map.at(input[i]);
+    }
+    return sum;
+}
+
+bool valid_sequence(vector<string> input){
+    for(int i =0;i<input.size()-1;i++){
+        if(value_map.at(input[i]) < value_map.at(input[i+1])){
+            return false;
+        }
+        if(input[i] == "IV" || input[i] == "IX"){
+            if(input[i+1] =="I" || input[i] ==input[i+1]) return false;
+        }
+        if(input[i] =="XL" || input[i] == "XC"){
+            if(input[i+1] =="X" || input[i] == input[i+1]) return false;
+        }
+        if(input[i]=="CD" || input[i]=="CM"){
+            if(input[i+1] == "C" ||  input[i] == input[i+1]) return false;
+        }
+    }
+    return true;
 }
 
 void to_uppercase(string &input){
@@ -116,13 +142,24 @@ int main(){
         if(!valid_or_not){
             cout<<"Invaild Character"<<endl;
             // return 0;
+            continue;
         }
         if(!repetition_rule(c)){
             cout<<"Failed repetition rule"<<endl<<endl;
+            continue;
         }
         vector<string> value = get_seprate_value(c);
         for(int i =0;i<value.size();++i){
             cout<<value[i]<<endl;
         }
+        cout<<endl<<endl;
+        
+        if(!valid_sequence(value)){
+            cout<<"Not a valid sequence"<<endl<<endl;
+            continue;
+        }
+
+        int sum =  total(value);
+        cout<<endl<<endl<<sum<<endl<<endl;
     }
 }
