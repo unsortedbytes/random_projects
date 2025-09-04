@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dowry Calculator - Just for Fun!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 Dowry Calculator</h1>
+        <p class="disclaimer">*This is purely satirical and for entertainment purposes only. We strongly oppose the dowry system.*</p>
+        
+        <form id="dowryForm" class="calculator-form">
+            <div class="form-group">
+                <label for="salary">Monthly Salary (₹):</label>
+                <select id="salary" name="salary" required>
+                    <option value="">Select salary range</option>
+                    <option value="20000">Below ₹20,000</option>
+                    <option value="50000">₹20,000 - ₹50,000</option>
+                    <option value="100000">₹50,000 - ₹1,00,000</option>
+                    <option value="200000">₹1,00,000 - ₹2,00,000</option>
+                    <option value="500000">Above ₹2,00,000</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="education">Education Level:</label>
+                <select id="education" name="education" required>
+                    <option value="">Select education</option>
+                    <option value="10">High School</option>
+                    <option value="15">Graduate</option>
+                    <option value="25">Post Graduate</option>
+                    <option value="35">Professional Degree (Engineer/Doctor)</option>
+                    <option value="50">PhD/Research</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="looks">Looks Rating:</label>
+                <select id="looks" name="looks" required>
+                    <option value="">Rate yourself</option>
+                    <option value="5">Average</option>
+                    <option value="10">Good Looking</option>
+                    <option value="20">Very Attractive</option>
+                    <option value="30">Model Material</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="family">Family Background:</label>
+                <select id="family" name="family" required>
+                    <option value="">Select family type</option>
+                    <option value="5">Middle Class</option>
+                    <option value="15">Upper Middle Class</option>
+                    <option value="30">Business Family</option>
+                    <option value="50">High Society</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Special Skills:</label>
+                <select id="skills" name="skills" required>
+                    <option value="">Select skills</option>
+                    <option value="5">Basic Cooking</option>
+                    <option value="10">Good Cook + Singer</option>
+                    <option value="15">Multi-talented</option>
+                    <option value="25">Professional Artist/Musician</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <select id="location" name="location" required>
+                    <option value="">Select city type</option>
+                    <option value="5">Small Town</option>
+                    <option value="10">Tier 2 City</option>
+                    <option value="20">Metro City</option>
+                    <option value="30">Mumbai/Delhi/Bangalore</option>
+                </select>
+            </div>
+
+            <button type="submit" class="calculate-btn">Calculate My Worth! 💰</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;">
+            <h2>Your Calculated Dowry: <span id="dowryAmount"></span></h2>
+            <p class="result-text">Congratulations! According to our completely ridiculous calculator...</p>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <div class="popup-body">
+                <img id="funnyImage" src="" alt="Funny reaction" class="funny-image">
+                <h3>Reality Check! 😄</h3>
+                <p>Remember: Your worth isn't measured in money! The dowry system is outdated and harmful. You are valuable just as you are! 💖</p>
+                <button id="closePopup" class="close-popup-btn">Got it! 👍</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with ❤️ for awareness | This calculator is meant to highlight the absurdity of the dowry system</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
