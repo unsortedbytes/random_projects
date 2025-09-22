@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor - Programming Ocean Academy</title>
+</head>
+<body>
+    <header>
+        <div class="container row">
+             <div class="brand">
+                <div class="logo"></div>
+                <div class="title">Code Editor - Live in the borwser</div>
+             </div>
+             <div class="row">
+                <button class="btn secondary" id="saveBtn" title="Save work locally" ><span>Save</span></button>
+                <button class="btn secondary" id="loadBtn" title="Loat work file"><span>Load</span></button>
+                <input type="file" id="openFile" accept="application/json" hidden>
+             </div>
+
+        </div> 
+    </header>
+
+    <main>
+        <aside class="card panel stack">
+            <h2>Task / Assingment</h2>
+
+            <textarea class="text" id="assingment" placeholder="Write the task description here..."></textarea>
+
+            <div class="stack">
+                <label for="textArea">Validation tests(JavaScript only - optional)</label>
+                <textarea name="textArea" class="text" placeholder="Write simple tests to append after the sudents code to check the solution." id=""></textarea>
+            </div>
+            <div class="muted">
+                Tip: <span class="kbd">Ctrl</span>+<span class="kbd">S</span> to save,
+                <span class="kbd">Ctrl</span>+<span class="kbd">Enter</span> to run. 
+            </div>
+        </aside>
+
+
+
+        <section class="stack" id="web-only">
+            <div id="webEditors" class="stack panel card">
+                <div class="row">
+                    <h2>HTML / CSS / JS</h2>
+                    <div class="row">
+                        <button class="btn ok" id="runWeb">Run</button>
+                        <button class="btn secondary" id="openPreview">Open preview</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
