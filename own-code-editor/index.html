@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Editor - Programming Ocean Academy</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -83,17 +84,20 @@
             </div>
             <div class="row">
                 <button class="btn warn" id="runTests">Run with tests</button>
-                <button class="btn secondary">Clear log</button>
+                <button class="btn err">Clear log</button>
             </div>
 
             <h3>Notes</h3>
             <ul class="muted">
-                <li>Everything runs inside the browser in a sandbox.</li>
-                <li>You can save the work as a json file and restore it</li>
+                <li class="label">Everything runs inside the browser in a sandbox.</li>
+                <li class="label">You can save the work as a json file and restore it</li>
             </ul>
         </aside>
     </main>
 
     <div class="footer">&copy;Unsortedbytes - All rights reserved. </div>
+
+
+    <script src="script.js"></script>
 </body>
 </html>
