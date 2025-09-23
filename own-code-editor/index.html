@@ -48,8 +48,52 @@
                         <button class="btn secondary" id="openPreview">Open preview</button>
                     </div>
                 </div>
+
+                <div class="tabs" id="webTabs" role="tablist"  aria-label="web editors">
+                    <button class="tab active" role="tab" aria-selected="true" tabindex="0" data-pane="html">
+                        HTML
+                    </button>
+                    <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-pane="css">CSS</button>
+                    <button class="tab" roe="tab" aria-selected="false" tabindex="-1" data-pane="js">JavaScript</button>
+                </div>
+
+
+                <div class="editor-warp" data-pane="html">
+                    <div id="ed_html" class="editor"></div>
+                </div>
+                <div class="editor-warp" data-pane="css" hidden>
+                    <div class="editor" id="ed_css"></div>
+                </div>
+                <div class="editor-warp" data-pane="js" hidden>
+                    <div class="editor" id="ed_js"></div>
+                </div>
+
+                <div class="stack">
+                    <h3>Preview</h3>
+                    <iframe id="preview" class="preview" src="" frameborder="0" sandbox="allow-scripts allow-same-origin allow-modals allow-forms"></iframe>
+                </div>
             </div>
         </section>
+
+
+        <aside class="stack panel card">
+            <h2>Output</h2>
+            <div class="out" id="output" aria-live="polite">
+
+            </div>
+            <div class="row">
+                <button class="btn warn" id="runTests">Run with tests</button>
+                <button class="btn secondary">Clear log</button>
+            </div>
+
+            <h3>Notes</h3>
+            <ul class="muted">
+                <li>Everything runs inside the browser in a sandbox.</li>
+                <li>You can save the work as a json file and restore it</li>
+            </ul>
+        </aside>
     </main>
+
+    <div class="footer">&copy;Unsortedbytes - All rights reserved. </div>
 </body>
 </html>
