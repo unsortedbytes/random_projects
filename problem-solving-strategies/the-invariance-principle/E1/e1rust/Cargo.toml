@@ -1,0 +1,9 @@
+[package]
+name = "e1rust"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bigdecimal = "0.4.9"
+num-traits = "0.2.19"
+rust_decimal = "1.39"
