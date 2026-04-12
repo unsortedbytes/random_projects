@@ -4,8 +4,7 @@ import axios from "axios";
 const API_BASE =
     window.location.hostname === "localhost"
         ? "http://localhost:5000"
-        : import.meta.env.VITE_API_BASE ||
-          "https://random-projects-7pjy.vercel.app/api";
+        : import.meta.env.VITE_API_BASE || "https://your-backend-domain.com";
 
 function Login({ setToken, onClose }) {
     const [email, setEmail] = useState("");
