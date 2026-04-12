@@ -28,17 +28,32 @@ function App() {
         formData.append("image", file);
 
         try {
+            console.log("📤 Uploading to:", `${API_BASE}/extract`);
+            console.log("🔑 Token:", token ? "✓ Present" : "✗ Not logged in");
+            console.log("📁 File:", file.name, file.size, "bytes");
+
             const res = await axios.post(`${API_BASE}/extract`, formData, {
                 headers: token ? { Authorization: token } : {},
             });
+
+            console.log("✅ Upload successful");
+            console.log(
+                "📖 Text received:",
+                res.data.text.substring(0, 100) + "...",
+            );
 
             setText(res.data.text);
             localStorage.setItem("extractedText", res.data.text);
 
             if (token) fetchHistory();
         } catch (err) {
-            console.error(err);
-            alert("Upload failed");
+            console.error("❌ Upload failed");
+            console.error("Error:", err.message);
+            console.error("Response:", err.response?.data);
+            console.error("Status:", err.response?.status);
+            alert(
+                "Upload failed: " + (err.response?.data?.error || err.message),
+            );
         }
     };
 

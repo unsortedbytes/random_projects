@@ -56,24 +56,40 @@ const optionalAuth = (req, res, next) => {
     next();
 };
 
+// ✅ Health check endpoint
+app.get("/", (req, res) => {
+    res.json({ status: "Backend is running ✅" });
+});
+
 // ✅ OCR Route
 app.post("/extract", optionalAuth, upload.single("image"), async (req, res) => {
     try {
+        console.log("📤 Upload request received");
+        console.log("File:", req.file ? "✓ Present" : "✗ Missing");
+
         // 🔥 Prevent crash if no file
         if (!req.file) {
+            console.log("❌ No file uploaded");
             return res.status(400).json({ error: "No file uploaded" });
         }
+
+        console.log("📝 File size:", req.file.size, "bytes");
+        console.log("🔄 Starting OCR processing...");
 
         // Write buffer to temp file (Render-compatible)
         const tmpPath = join(tmpdir(), `ocr-${Date.now()}.png`);
         writeFileSync(tmpPath, req.file.buffer);
+        console.log("💾 Temp file created:", tmpPath);
 
         const result = await Tesseract.recognize(tmpPath, "eng");
+        console.log("✅ OCR completed");
 
         // Clean up temp file
         unlinkSync(tmpPath);
+        console.log("🗑️ Temp file deleted");
 
         const text = result.data.text;
+        console.log("📖 Extracted text length:", text.length);
 
         // ✅ Save ONLY if user is logged in
         if (req.userId) {
@@ -81,12 +97,17 @@ app.post("/extract", optionalAuth, upload.single("image"), async (req, res) => {
                 userId: req.userId,
                 extractedText: text,
             });
+            console.log("💾 History saved for user:", req.userId);
+        } else {
+            console.log("ℹ️ No user logged in, skipping history save");
         }
 
+        console.log("✅ Response sent");
         res.json({ text });
     } catch (err) {
-        console.log("OCR Error:", err);
-        res.status(500).json({ error: "OCR failed" });
+        console.error("❌ OCR Error:", err.message);
+        console.error("Stack:", err.stack);
+        res.status(500).json({ error: "OCR failed: " + err.message });
     }
 });
 
