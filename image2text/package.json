@@ -1,17 +1,16 @@
 {
-    "name": "backend",
+    "name": "image2text",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "Image to text OCR application",
     "type": "module",
     "scripts": {
-        "start": "node server.js",
-        "dev": "node server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "npm run dev -w frontend",
+        "build": "npm run build -w frontend"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "workspaces": [
+        "frontend",
+        "backend"
+    ],
     "dependencies": {
         "bcrypt": "^6.0.0",
         "cors": "^2.8.6",

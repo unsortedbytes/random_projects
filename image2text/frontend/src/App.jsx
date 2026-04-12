@@ -5,7 +5,8 @@ import Login from "./Login";
 const API_BASE =
     window.location.hostname === "localhost"
         ? "http://localhost:5000"
-        : "http://backend:5000";
+        : import.meta.env.VITE_API_BASE ||
+          "https://random-projects-7pjy.vercel.app/api";
 
 function App() {
     const [text, setText] = useState(
