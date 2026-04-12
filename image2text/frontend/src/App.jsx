@@ -173,24 +173,20 @@ function App() {
                 </h1>
 
                 {/* Upload Button */}
-                <label className="mb-4">
+                <label className="mb-4 block">
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => handleFileSelect(e.target.files[0])}
+                        onChange={(e) => {
+                            console.log("File input changed:", e.target.files);
+                            handleFileSelect(e.target.files[0]);
+                        }}
                         className="hidden"
                         disabled={isUploading}
                     />
-                    <button className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed px-6 py-2 rounded font-semibold flex items-center gap-2">
-                        {isUploading ? (
-                            <>
-                                <span className="animate-spin">⏳</span>
-                                Processing...
-                            </>
-                        ) : (
-                            <>📤 Choose Image</>
-                        )}
-                    </button>
+                    <div className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed px-6 py-2 rounded font-semibold flex items-center gap-2 cursor-pointer inline-block">
+                        📤 Choose Image
+                    </div>
                 </label>
 
                 <div
