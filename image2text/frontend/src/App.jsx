@@ -5,7 +5,8 @@ import Login from "./Login";
 const API_BASE =
     window.location.hostname === "localhost"
         ? "http://localhost:5000"
-        : import.meta.env.VITE_API_BASE || "https://your-backend-domain.com";
+        : import.meta.env.VITE_API_BASE ||
+          "https://image2text-backend.onrender.com";
 
 function App() {
     const [text, setText] = useState(
