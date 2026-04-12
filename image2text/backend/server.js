@@ -4,6 +4,9 @@ import cors from "cors";
 import Tesseract from "tesseract.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import { writeFileSync, unlinkSync } from "fs";
+import { tmpdir } from "os";
+import { join } from "path";
 
 import authRoutes from "./routes/auth.js";
 import History from "./models/History.js"; // ✅ make sure this file exists
@@ -31,8 +34,8 @@ app.use(express.json());
 // ✅ Auth routes
 app.use("/auth", authRoutes);
 
-// ✅ Multer setup
-const upload = multer({ dest: "uploads/" });
+// ✅ Multer setup - use memory storage for Render compatibility
+const upload = multer({ storage: multer.memoryStorage() });
 
 // ✅ Optional Auth Middleware
 const optionalAuth = (req, res, next) => {
@@ -61,7 +64,14 @@ app.post("/extract", optionalAuth, upload.single("image"), async (req, res) => {
             return res.status(400).json({ error: "No file uploaded" });
         }
 
-        const result = await Tesseract.recognize(req.file.path, "eng");
+        // Write buffer to temp file (Render-compatible)
+        const tmpPath = join(tmpdir(), `ocr-${Date.now()}.png`);
+        writeFileSync(tmpPath, req.file.buffer);
+
+        const result = await Tesseract.recognize(tmpPath, "eng");
+
+        // Clean up temp file
+        unlinkSync(tmpPath);
 
         const text = result.data.text;
 
@@ -75,7 +85,7 @@ app.post("/extract", optionalAuth, upload.single("image"), async (req, res) => {
 
         res.json({ text });
     } catch (err) {
-        console.log(err);
+        console.log("OCR Error:", err);
         res.status(500).json({ error: "OCR failed" });
     }
 });
@@ -97,7 +107,7 @@ app.get("/history", async (req, res) => {
 
         res.json(data);
     } catch (err) {
-        console.log(err);
+        console.log("History Error:", err);
         res.status(401).json({ error: "Invalid token" });
     }
 });
