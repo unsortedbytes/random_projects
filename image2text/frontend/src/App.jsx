@@ -175,9 +175,7 @@ function App() {
                                 Processing...
                             </>
                         ) : (
-                            <>
-                                📤 Choose Image
-                            </>
+                            <>📤 Choose Image</>
                         )}
                     </button>
                 </label>
@@ -199,7 +197,9 @@ function App() {
                             <span className="text-2xl animate-spin">📸</span>
                         </div>
                         <p>📤 Uploading...</p>
-                        <p className="text-sm text-gray-300 mt-2">This may take a minute for OCR processing</p>
+                        <p className="text-sm text-gray-300 mt-2">
+                            This may take a minute for OCR processing
+                        </p>
                     </div>
                 )}
 
@@ -214,12 +214,17 @@ function App() {
                     <h3 className="mb-2 text-lg font-medium">Extracted Text</h3>
                     {isUploading ? (
                         <div className="text-center py-8">
-                            <p className="text-gray-400">🔄 Processing with OCR...</p>
-                            <p className="text-sm text-gray-500 mt-2">This may take a minute</p>
+                            <p className="text-gray-400">
+                                🔄 Processing with OCR...
+                            </p>
+                            <p className="text-sm text-gray-500 mt-2">
+                                This may take a minute
+                            </p>
                         </div>
                     ) : (
                         <pre className="whitespace-pre-wrap text-gray-300">
-                            {text || "Upload an image to see extracted text here"}
+                            {text ||
+                                "Upload an image to see extracted text here"}
                         </pre>
                     )}
                 </div>
