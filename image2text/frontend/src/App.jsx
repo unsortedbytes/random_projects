@@ -16,11 +16,13 @@ function App() {
     const [preview, setPreview] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [showLogin, setShowLogin] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     // 📤 Upload Image
     const uploadImage = async (file) => {
         if (!file) return;
 
+        setIsUploading(true);
         const previewUrl = URL.createObjectURL(file);
         setPreview(previewUrl);
 
@@ -54,6 +56,8 @@ function App() {
             alert(
                 "Upload failed: " + (err.response?.data?.error || err.message),
             );
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -155,22 +159,49 @@ function App() {
                     Upload or Paste Image
                 </h1>
 
-                <input
-                    type="file"
-                    onChange={(e) => uploadImage(e.target.files[0])}
-                    className="mb-4"
-                />
+                {/* Upload Button */}
+                <label className="mb-4">
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => uploadImage(e.target.files[0])}
+                        className="hidden"
+                        disabled={isUploading}
+                    />
+                    <button className="bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed px-6 py-2 rounded font-semibold flex items-center gap-2">
+                        {isUploading ? (
+                            <>
+                                <span className="animate-spin">⏳</span>
+                                Processing...
+                            </>
+                        ) : (
+                            <>
+                                📤 Choose Image
+                            </>
+                        )}
+                    </button>
+                </label>
 
                 <div
                     className="w-full max-w-xl border-2 border-dashed border-gray-600 p-10 text-center rounded-lg hover:border-gray-400 transition"
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => {
                         e.preventDefault();
-                        uploadImage(e.dataTransfer.files[0]);
+                        if (!isUploading) uploadImage(e.dataTransfer.files[0]);
                     }}
                 >
                     Drag & Drop Image Here
                 </div>
+
+                {isUploading && (
+                    <div className="mt-6 p-4 bg-blue-900 rounded text-center">
+                        <div className="flex justify-center mb-2">
+                            <span className="text-2xl animate-spin">📸</span>
+                        </div>
+                        <p>📤 Uploading...</p>
+                        <p className="text-sm text-gray-300 mt-2">This may take a minute for OCR processing</p>
+                    </div>
+                )}
 
                 {preview && (
                     <img
@@ -181,9 +212,16 @@ function App() {
 
                 <div className="mt-6 w-full max-w-xl bg-gray-800 p-4 rounded-lg shadow">
                     <h3 className="mb-2 text-lg font-medium">Extracted Text</h3>
-                    <pre className="whitespace-pre-wrap text-gray-300">
-                        {text}
-                    </pre>
+                    {isUploading ? (
+                        <div className="text-center py-8">
+                            <p className="text-gray-400">🔄 Processing with OCR...</p>
+                            <p className="text-sm text-gray-500 mt-2">This may take a minute</p>
+                        </div>
+                    ) : (
+                        <pre className="whitespace-pre-wrap text-gray-300">
+                            {text || "Upload an image to see extracted text here"}
+                        </pre>
+                    )}
                 </div>
             </div>
 
