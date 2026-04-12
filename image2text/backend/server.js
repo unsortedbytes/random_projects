@@ -25,6 +25,8 @@ app.use(
             "http://localhost:3000",
             "http://localhost:5173",
             process.env.FRONTEND_URL || "http://localhost:3000",
+            /\.vercel\.app$/,
+            "https://images2text.vercel.app", // Add your actual Vercel URL
         ],
         credentials: true,
     }),
