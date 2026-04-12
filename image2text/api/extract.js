@@ -9,7 +9,7 @@ import { join } from "path";
 import { handleCors } from "./middleware/cors.js";
 
 const upload = multer({ storage: multer.memoryStorage() });
-const uploadMiddleware = upload.single('image');
+const uploadMiddleware = upload.single("image");
 
 export default async (req, res) => {
     // Handle CORS
