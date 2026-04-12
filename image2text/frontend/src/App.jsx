@@ -14,25 +14,38 @@ function App() {
     );
     const [history, setHistory] = useState([]);
     const [preview, setPreview] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [showLogin, setShowLogin] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
 
-    // 📤 Upload Image
-    const uploadImage = async (file) => {
+    // � Handle file selection
+    const handleFileSelect = (file) => {
         if (!file) return;
-
-        setIsUploading(true);
+        setSelectedFile(file);
         const previewUrl = URL.createObjectURL(file);
         setPreview(previewUrl);
+        console.log("📁 File selected:", file.name, file.size, "bytes");
+    };
+
+    // 📤 Upload Image
+    const uploadImage = async () => {
+        if (!selectedFile) return;
+
+        setIsUploading(true);
 
         const formData = new FormData();
-        formData.append("image", file);
+        formData.append("image", selectedFile);
 
         try {
             console.log("📤 Uploading to:", `${API_BASE}/extract`);
             console.log("🔑 Token:", token ? "✓ Present" : "✗ Not logged in");
-            console.log("📁 File:", file.name, file.size, "bytes");
+            console.log(
+                "📁 File:",
+                selectedFile.name,
+                selectedFile.size,
+                "bytes",
+            );
 
             const res = await axios.post(`${API_BASE}/extract`, formData, {
                 headers: token ? { Authorization: token } : {},
@@ -86,13 +99,13 @@ function App() {
             const item = e.clipboardData.items[0];
 
             if (item && item.type.includes("image")) {
-                uploadImage(item.getAsFile());
+                handleFileSelect(item.getAsFile());
             }
         };
 
         window.addEventListener("paste", handlePaste);
         return () => window.removeEventListener("paste", handlePaste);
-    }, [token]);
+    }, []);
 
     // 🧹 cleanup preview
     useEffect(() => {
@@ -164,7 +177,7 @@ function App() {
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => uploadImage(e.target.files[0])}
+                        onChange={(e) => handleFileSelect(e.target.files[0])}
                         className="hidden"
                         disabled={isUploading}
                     />
@@ -185,7 +198,8 @@ function App() {
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => {
                         e.preventDefault();
-                        if (!isUploading) uploadImage(e.dataTransfer.files[0]);
+                        if (!isUploading)
+                            handleFileSelect(e.dataTransfer.files[0]);
                     }}
                 >
                     Drag & Drop Image Here
@@ -204,10 +218,38 @@ function App() {
                 )}
 
                 {preview && (
-                    <img
-                        src={preview}
-                        className="mt-6 w-60 rounded shadow-lg"
-                    />
+                    <div className="mt-6 text-center">
+                        <img
+                            src={preview}
+                            className="w-60 rounded shadow-lg mb-4"
+                        />
+                        <div className="flex gap-3 justify-center mb-4">
+                            <button
+                                onClick={uploadImage}
+                                disabled={isUploading}
+                                className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed px-8 py-3 rounded font-semibold text-lg flex items-center gap-2"
+                            >
+                                {isUploading ? (
+                                    <>
+                                        <span className="animate-spin">⏳</span>
+                                        Extracting...
+                                    </>
+                                ) : (
+                                    <>🔍 Extract Text</>
+                                )}
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setSelectedFile(null);
+                                    setPreview(null);
+                                }}
+                                disabled={isUploading}
+                                className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-500 disabled:cursor-not-allowed px-6 py-3 rounded font-semibold"
+                            >
+                                ❌ Clear
+                            </button>
+                        </div>
+                    </div>
                 )}
 
                 <div className="mt-6 w-full max-w-xl bg-gray-800 p-4 rounded-lg shadow">
