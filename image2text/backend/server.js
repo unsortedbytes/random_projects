@@ -131,7 +131,7 @@ app.post("/extract", optionalAuth, upload.single("image"), async (req, res) => {
         console.log("💾 Temp directories created");
 
         // Run Chandra OCR with optimized settings
-        const hfToken = process.env.HF_TOKEN || "REMOVED_TOKEN";
+        const hfToken = process.env.HF_TOKEN;
         const command = `chandra "${tmpInputPath}" "${tmpOutputDir}" --method hf`;
         console.log(`🚀 Running optimized OCR...`);
 
