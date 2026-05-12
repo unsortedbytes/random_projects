@@ -232,7 +232,7 @@ app.get("/history", async (req, res) => {
             return res.status(401).json({ error: "Login required" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const data = await History.find({ userId: decoded.id }).sort({
             createdAt: -1,
