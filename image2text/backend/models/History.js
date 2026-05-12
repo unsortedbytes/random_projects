@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
 const historySchema = new mongoose.Schema({
-    userId: mongoose.Schema.Types.ObjectId,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        index: true,
+    },
     extractedText: String,
     createdAt: {
         type: Date,

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(pgrep *)",
+      "Bash(docker *)",
+      "Bash(sleep *)"
+    ]
+  },
+  "$version": 3
+}
