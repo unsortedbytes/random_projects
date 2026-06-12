@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      width: 330px;
+      padding: 16px;
+      margin: 0;
+      background: #fafafa;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    h1 { font-size: 15px; margin: 0; }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 10px 0 4px;
+      color: #333;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 7px 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 9px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #save   { background: #1a73e8; color: #fff; }
+    #logNow { background: #188038; color: #fff; }
+    button:disabled { opacity: 0.6; cursor: default; }
+    #status {
+      margin-top: 10px;
+      font-size: 12px;
+      min-height: 16px;
+      text-align: center;
+    }
+    .ok  { color: #188038; }
+    .err { color: #d93025; }
+    .hint { font-size: 11px; color: #777; margin-top: 2px; }
+
+    /* tracking toggle */
+    .switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0; cursor: pointer;
+      background: #ccc; border-radius: 22px; transition: 0.2s;
+    }
+    .slider:before {
+      content: ""; position: absolute; height: 16px; width: 16px;
+      left: 3px; bottom: 3px; background: #fff; border-radius: 50%;
+      transition: 0.2s;
+    }
+    input:checked + .slider { background: #188038; }
+    input:checked + .slider:before { transform: translateX(18px); }
+
+    #stats {
+      margin-top: 12px;
+      padding: 8px 10px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #444;
+    }
+    #stats .line { display: flex; justify-content: space-between; padding: 1px 0; }
+    #stats .muted { color: #999; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Job Tracker</h1>
+    <label class="switch" title="Tracking on/off">
+      <input type="checkbox" id="trackingEnabled" checked />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <label for="geminiApiKey">Gemini API Key</label>
+  <input type="password" id="geminiApiKey" placeholder="AQ. or AIza..." />
+  <div class="hint">Free at aistudio.google.com/apikey</div>
+
+  <label for="appsScriptUrl">Apps Script Web App URL</label>
+  <input type="text" id="appsScriptUrl" placeholder="https://script.google.com/macros/s/.../exec" />
+
+  <label for="sheetName">Sheet Tab (optional)</label>
+  <input type="text" id="sheetName" placeholder="Sheet1 — created automatically if missing" />
+
+  <label class="row" style="display:flex;align-items:center;gap:8px;margin-top:12px;cursor:pointer;">
+    <input type="checkbox" id="smartConfirm" checked style="margin:0;" />
+    <span style="font-weight:600;font-size:12px;">Log only after you actually submit</span>
+  </label>
+  <div class="hint">Apply click arms the tracker; the row is written when you hit Submit or a confirmation appears. Abandoned forms log nothing.</div>
+
+  <button id="save">Save Settings</button>
+  <button id="logNow">Log This Page</button>
+
+  <div id="status"></div>
+
+  <div id="stats" hidden>
+    <div class="line"><span>Tracked in sheet</span><b id="statTotal">—</b></div>
+    <div class="line"><span>Awaiting your submit</span><b id="statAwaiting">—</b></div>
+    <div class="line"><span>Waiting to sync</span><b id="statPending">—</b></div>
+    <div id="recentList"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
